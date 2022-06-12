@@ -1,0 +1,19 @@
+POST http://localhost:5500/api/send-otp HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "phone":"+91 81070 01498"
+}
+
+###
+
+POST http://localhost:5500/api/verify-otp HTTP/1.1,
+Accept: application/json
+Content-Type: application/json
+
+{
+    "phone":"+91 81070 01498",
+    "otp":5626,
+    "hash":"facefb0e117bc224004e436dbfb868cebddc1e75ed1c19d9b6efa97cea811470.1649138275297"
+}
