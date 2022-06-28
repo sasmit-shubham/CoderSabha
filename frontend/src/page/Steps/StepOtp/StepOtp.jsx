@@ -9,7 +9,7 @@ import {setAuth} from '../../../store/authSlice';
 import { useDispatch } from 'react-redux'; 
 
  
-const StepOtp = ({onNext}) => {
+const StepOtp = () => {
   const dispatch = useDispatch();
   const HeaderContent ={
     title:"Enter the code we just texted you!",
@@ -23,7 +23,7 @@ const StepOtp = ({onNext}) => {
       const {data } = await verifyOtp({otp,phone,hash});
       console.log(data);
       dispatch(setAuth(data));
-      // onNext();
+
     } catch(err){
       console.log(err);
     }

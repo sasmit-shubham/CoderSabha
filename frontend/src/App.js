@@ -13,8 +13,8 @@ function App() {
           <Navigation/>
           <Routes>
               <Route path='/' element={<GuestRoute><Home/></GuestRoute>}/>
-              <Route path='/activate' element={<Semiprotected><Activate/></Semiprotected>}/>
               <Route path='/authenticate' element={<GuestRoute><Authenticate/></GuestRoute>}/>
+              <Route path='/activate' element={<Semiprotected><Activate/></Semiprotected>}/>
               <Route path = '/rooms' element={<Protected><Rooms/></Protected>}/>
           </Routes>
       </BrowserRouter>
@@ -27,11 +27,11 @@ const Semiprotected = ({children}) => {
 }
 const Protected = ({children}) => {
     const {user,isAuth} = useSelector((state)=>state.auth);
-    return !isAuth?<Navigate to="/"/>:isAuth && !user.activated?<Navigation to="activity"/>:(children)
+    return !isAuth?<Navigate to="/"/>:isAuth && !user.activated?<Navigate to="/activate"/>:(children)
  }
  
 const GuestRoute = ({children}) => {
   const {isAuth} = useSelector((state)=>state.auth)
-  return isAuth?<Navigate to="/rooms"/>:children
+  return isAuth?<Navigate to="/rooms"/>:(children)
 }
 export default App; 
