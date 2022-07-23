@@ -84,6 +84,67 @@ class Authcontroller {
         const userDto = new UserDto(user);
         res.json({user:userDto,auth:true });
     }
+
+    async refresh(req, res){
+        // get refresh token from cookie
+        const {refreshToken: refreshTokenFromCookie} = req.cookies;
+        let userData;
+        // check if token is valid
+        try {
+            userData = await tokenService.verifyRefreshToken(refreshToken);
+        } catch (error) {
+          return res.status(401).json({message:'Invalid Token'});   
+        }
+        // check if token is in database
+        try {
+            const token = await tokenService.findRefreshToken(
+                userData._id, 
+                refreshTokenFromCookie
+            )
+
+            if(!token){
+                return res.status(401).json({
+                    message:'invalid token'
+                }) 
+            }
+        } catch (error) {
+            return res.status(500).json({
+                message:'invalid token'
+            })
+        }
+
+        const user = await userService.findUser({_id:userData._id});
+        if(!user){
+            return res.result(404).json({message:'No User'});
+        }
+        // generate new tokens
+        const {refreshToken, accessToken} = tokenService.generateToken({
+            _id: userData._id,
+        })
+
+        try {
+            await tokenService.updateRefreshToken(refreshToken);
+        } catch (error) {
+            return res.status(500).json({
+                message:'internal error',
+            })
+        }
+        //update refreshtoken
+        // put in cookie
+        res.cookie("refreshToken", refreshToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+        });
+
+        res.cookie("accessToken", accessToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+        });
+        const userDto = new UserDto(user);
+        res.json({user:userDto,auth:true });
+
+        // response
+    }
 }
 
 module.exports = new Authcontroller();    
