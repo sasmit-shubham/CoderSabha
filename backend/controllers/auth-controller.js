@@ -17,9 +17,8 @@ class Authcontroller {
         // hash services
         const ttl = 1000 * 60 * 2;// time to leave
         const expires = Date.now() + ttl;
-        console.log("generating expires: ",expires);
         const data = `${phone}.${otp}.${expires}`;
-        // console.log(data);
+        
         const hash = hashService.hashOtp(data); 
         // send otp 
         try {
@@ -39,11 +38,10 @@ class Authcontroller {
             res.status(400).json({ message: "All fields are required" });
         }
         const [hashedOtp, expires] = hash.split('.');
-        console.log(expires,Date.now());
         if (Date.now() > +expires) {
             res.status(400).json({ message: "otp expired" });
         }
-        // console.log("hh");
+        
         const data = `${phone}.${otp}.${expires}`;
         const isValid = otpServices.verifyOtp(hashedOtp, data);
         
@@ -70,7 +68,7 @@ class Authcontroller {
             activated: false,
         });
 
-        tokenService.storeRefreshToken(refreshToken,user._id);
+        await tokenService.storeRefreshToken(refreshToken,user._id);
 
         res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
@@ -87,19 +85,22 @@ class Authcontroller {
 
     async refresh(req, res){
         // get refresh token from cookie
-        const {refreshToken: refreshTokenFromCookie} = req.cookies;
+        console.log(req.cookies);
+        const refresh_token = req.cookies['refreshToken'];
+        // check if token 
         let userData;
-        // check if token is valid
         try {
-            userData = await tokenService.verifyRefreshToken(refreshToken);
+            userData = await tokenService.verifyRefreshToken(
+                refresh_token
+            );
         } catch (error) {
-          return res.status(401).json({message:'Invalid Token'});   
+          return res.status(401).json({message:`${error}`});   
         }
         // check if token is in database
         try {
             const token = await tokenService.findRefreshToken(
                 userData._id, 
-                refreshTokenFromCookie
+                refresh_token
             )
 
             if(!token){
@@ -109,10 +110,10 @@ class Authcontroller {
             }
         } catch (error) {
             return res.status(500).json({
-                message:'invalid token'
+                message:'internal server error'
             })
         }
-
+        // check if user is valid
         const user = await userService.findUser({_id:userData._id});
         if(!user){
             return res.result(404).json({message:'No User'});
@@ -121,15 +122,14 @@ class Authcontroller {
         const {refreshToken, accessToken} = tokenService.generateToken({
             _id: userData._id,
         })
-
+        // update the refreshTokens
         try {
-            await tokenService.updateRefreshToken(refreshToken);
+            await tokenService.updateRefreshToken(userData._id,refreshToken);
         } catch (error) {
             return res.status(500).json({
                 message:'internal error',
             })
         }
-        //update refreshtoken
         // put in cookie
         res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
@@ -140,10 +140,31 @@ class Authcontroller {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
         });
+        // response
         const userDto = new UserDto(user);
         res.json({user:userDto,auth:true });
+ 
+    }
 
-        // response
+    async logout(req,res){
+        // delete refresh token from db
+        const {refreshToken} = req.cookies;
+        try {
+            await tokenService.removeToken(refreshToken);
+        } catch (error) {
+            res.status(401).json({message:"logout is not working"});
+        }
+        
+        // delete cookies
+        try {
+            res.clearCookie('refreshToken');
+            res.clearCookie('accessToken'); 
+        } catch (error) {
+            res.status(401).json({message:"delete cokkies is not working"})
+        }
+        
+        res.json({user:null,auth:false});
+
     }
 }
 

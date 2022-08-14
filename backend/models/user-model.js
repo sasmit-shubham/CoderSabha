@@ -9,7 +9,7 @@ const userSchema = new Schema(
         activated: { type: Boolean, required: false, default: false }
     }, 
     {
-        timestamsp: true,
+        timestamps: true,
     }
 );
 

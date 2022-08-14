@@ -7,7 +7,7 @@ const refreshSchema = new Schema(
         userId: {type:Schema.Types.ObjectId, ref:'User'}
     }, 
     {
-        timestamsp: true,
+        timestamps: true,
     }
 );
 

@@ -14,6 +14,6 @@ module.exports = async function(req,res,next) {
         res.user = userData;
         next();
     }catch(err){
-        res.status(401).json({message:'Invalid Token'});
+        res.status(401).json({message:`${err}`});
     }
 }
