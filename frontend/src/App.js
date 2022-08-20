@@ -6,17 +6,18 @@ import Authenticate from './page/Authenticate/Authenticate';
 import Activate from './page/Activate/Activate';
 import Rooms from './page/Rooms/Rooms';
 import { useSelector  } from 'react-redux';
-// import {useState} from "react";
+import Loader from './component/shared/Loader/Loader';
 import { useLoadingWithRefresh } from './hooks/useLoadingWithRefresh';
 
 function App() {
   const loading = useLoadingWithRefresh();
+  
   // const [loading,setLoading] = useState(false);
   // call refreshEnd point
   console.log("C");
   console.log(loading);
     return loading.loading?(
-      'loading...'
+      <Loader message="Loading please wait"/>
     ):(     
       <BrowserRouter>
           <Navigation/>
