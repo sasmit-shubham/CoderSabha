@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {RiVoiceprintFill} from "react-icons/ri"
+import {RiLogoutCircleRLine} from "react-icons/ri"
 import styles from "./Navigation.module.css" 
 import {logout} from "../../../Http/Index"
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +22,7 @@ export default function Navigation() {
   }
 
   const dispatch= useDispatch();
-  const {isAuth} = useSelector((state)=>state.auth);
+  const {isAuth,user} = useSelector((state)=>state.auth);
   async function logoutUser(){
     try {
       const {data} = await logout();
@@ -37,7 +38,31 @@ export default function Navigation() {
         <RiVoiceprintFill color="#d4af37" size="2em"/>
         <span style={logoText}>Coderसभा</span>
       </Link>
-      {isAuth && <button onClick={logoutUser}>logout</button>}
+      {isAuth && (
+                <div className={styles.navRight}>
+                    <h3>{user?.name}</h3>
+                    <Link to="/">
+                        <img
+                            className={styles.avatar}
+                            src={
+                                user.avatar
+                                    ? user.avatar
+                                    : '/images/lion.png'
+                            }
+                            width="40"
+                            height="40"
+                            alt="avatar"
+                        />
+                    </Link>
+                    <button
+                        className={styles.logoutButton}
+                        onClick={logoutUser}
+                    >
+                        <RiLogoutCircleRLine  size="1.5em"/>
+                    </button>
+                </div>
+            )}
+      {/* {isAuth && <button onClick={logoutUser}>logout</button>} */}
     </nav>
   )
 }

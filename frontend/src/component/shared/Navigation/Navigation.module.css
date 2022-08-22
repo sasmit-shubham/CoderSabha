@@ -5,4 +5,23 @@
     justify-content: space-between;
 }
 
+.navRight{
+    display: flex;
+    align-items: center;
+}
+.jugadStyle{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.logoutButton{
+    cursor:pointer;
+}
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0077ff;
+    margin: 0 20px;
+    margin-right: 10px;
+}
+
 

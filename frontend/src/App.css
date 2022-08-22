@@ -22,6 +22,12 @@ body{
     font-family: 'Nunito', sans-serif;
     color: #fff
 }
+button{
+    border:none;
+    outline:none;
+    cursor: pointer;
+    font-weight: bold;
+}
 
 .container{
     width:1200px;
