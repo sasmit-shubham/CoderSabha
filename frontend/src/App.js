@@ -5,6 +5,7 @@ import Navigation from './component/shared/Navigation/Navigation';
 import Authenticate from './page/Authenticate/Authenticate';
 import Activate from './page/Activate/Activate';
 import Rooms from './page/Rooms/Rooms';
+import Room from './page/Room/Room';
 import { useSelector  } from 'react-redux';
 import Loader from './component/shared/Loader/Loader';
 import { useLoadingWithRefresh } from './hooks/useLoadingWithRefresh';
@@ -26,6 +27,7 @@ function App() {
               <Route path='/authenticate' element={<GuestRoute><Authenticate/></GuestRoute>}/>
               <Route path='/activate' element={<Semiprotected><Activate/></Semiprotected>}/>
               <Route path = '/rooms' element={<Protected><Rooms/></Protected>}/>
+              <Route path = '/rooms/room/:id' element={<Protected><Room/></Protected>}/>
           </Routes>
       </BrowserRouter>
     );

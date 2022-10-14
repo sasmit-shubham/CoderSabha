@@ -7,18 +7,14 @@ const UserDto = require('../dtos/user-dto');
 class Authcontroller {
     async sendOtp(req, res) {
         const { phone } = req.body;
-
         if (!phone) {
             return res.status(400).json({ message: "phone field is required" });
         }
-
         const otp =  otpServices.generateOtp();
-
         // hash services
         const ttl = 1000 * 60 * 2;// time to leave
         const expires = Date.now() + ttl;
         const data = `${phone}.${otp}.${expires}`;
-        
         const hash = hashService.hashOtp(data); 
         // send otp 
         try {
@@ -85,7 +81,6 @@ class Authcontroller {
 
     async refresh(req, res){
         // get refresh token from cookie
-        console.log(req.cookies);
         const refresh_token = req.cookies['refreshToken'];
         // check if token 
         let userData;

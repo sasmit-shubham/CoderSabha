@@ -1,23 +1,26 @@
 import React from 'react'
 import styles from "./RoomCard.module.css"
 import {RiChatVoiceFill,RiUserFill} from "react-icons/ri"
+import {useNavigate} from 'react-router-dom'
 const RoomCard = ({room}) => {
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
+    <div onClick={()=>navigate(`room/${room.id}`)} className={styles.card}>
         <h3 className={styles.topic}>{room.topic}</h3>
         <div className={styles.speakers}>
-            <div className={styles.avatars}>
+            <div className={`${styles.avatars} 
+            ${room.speakers.length === 1 ? styles.singleSpeaker:''}`}>
             {
                 room.speakers.map((speaker)=>(
-                    <img src={speaker.avatar} alt="" />
+                    <img key = {speaker.id}src={speaker.avatar} alt="" />
                 ))
             }
             </div>
             <div className={styles.names}>
             {
                 room.speakers.map((speaker) => (
-                    <div className={styles.nameWrapper}>
-                        <span>{speaker.name}</span>
+                    <div key={speaker.id} className={styles.nameWrapper}>
+                        <span >{speaker.name}</span>
                         <RiChatVoiceFill/>
                     </div>
                 ))

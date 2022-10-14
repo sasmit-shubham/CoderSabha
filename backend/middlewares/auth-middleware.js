@@ -10,9 +10,12 @@ module.exports = async function(req,res,next) {
         if(!userData){
             throw new Error();
         }
-        
-        res.user = userData;
+        req.user = userData;
+        console.log("*********middleware************");
+        console.log(req.user);
+        console.log("*********** the end of the middleware ************");
         next();
+        
     }catch(err){
         res.status(401).json({message:`${err}`});
     }

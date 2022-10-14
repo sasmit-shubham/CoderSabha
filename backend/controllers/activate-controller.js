@@ -19,6 +19,7 @@ class ActivateController {
         const imagePath = `${Date.now()}-${Math.round(
             Math.random() * 1e9
         )}.png`;
+        console.log("your image path is "+imagePath);
         try {
             const jimResp = await Jimp.read(buffer);
             jimResp
@@ -28,7 +29,7 @@ class ActivateController {
             res.status(500).json({ message: 'Could not process the image' });
         }
         
-        const userId = res.user._id;
+        const userId = req.user._id;
         try {
             const user = await userService.findUser({ _id: userId });
             if (!user) {
