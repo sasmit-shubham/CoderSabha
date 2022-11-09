@@ -13,21 +13,16 @@ export function useLoadingWithRefresh(){
                     {
                       withCredentials:true,
                     }
-                )
-                console.log(data)
+                );
                 dispatch(setAuth(data));
-                console.log(data);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
-
                 setLoading(false);
-                console.log("A")
                 console.log(loading)
             }
-        })()
-    });
-    console.log("B");
-    console.log(loading);
+        })();
+    }, []);
+    
     return {loading};
 }

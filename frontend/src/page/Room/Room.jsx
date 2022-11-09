@@ -7,6 +7,8 @@ const Room = () => {
   const {id:roomId} = useParams();
   const user = useSelector(state => state.auth.user);
   const {clients,provideRef} = useWebRTC(roomId,user);
+
+  // console.log(roomId,"roomID");
   return (
     <div>
       <h1>All connected clients</h1>

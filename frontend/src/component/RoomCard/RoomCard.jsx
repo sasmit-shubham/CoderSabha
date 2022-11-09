@@ -3,7 +3,8 @@ import styles from "./RoomCard.module.css"
 import {RiChatVoiceFill,RiUserFill} from "react-icons/ri"
 import {useNavigate} from 'react-router-dom'
 const RoomCard = ({room}) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
+//   console.log(room.id,"room-id");
   return (
     <div onClick={()=>navigate(`room/${room.id}`)} className={styles.card}>
         <h3 className={styles.topic}>{room.topic}</h3>

@@ -11,7 +11,7 @@ export const activateSlice = createSlice({
     initialState,
     reducers: {
         setName: (state, action) => {
-            state.name=  action.payload;
+            state.name =  action.payload;
         },
         setAvatar: (state, action) => {
             state.avatar = action.payload;

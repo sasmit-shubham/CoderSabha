@@ -1,11 +1,13 @@
 import {io} from "socket.io-client"
 
-export const socketInit = () =>{
+const socketInit = () =>{
     const options = {
-        'force new conneciton':true,
+        'force new connection':true,
         reconnectionAttempt:"Infinity",
         timeout:10000,
         transports:['websocket'],
     }
-    return io('http//localhost:5500',options)
+    return io('http://localhost:5500',options)
 }
+
+export default socketInit;
