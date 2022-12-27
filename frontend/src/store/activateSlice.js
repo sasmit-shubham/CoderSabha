@@ -15,7 +15,7 @@ export const activateSlice = createSlice({
         },
         setAvatar: (state, action) => {
             state.avatar = action.payload;
-        },
+        },  
     },
 });
 

@@ -44,7 +44,7 @@ export default function Navigation() {
                     <Link to="/">
                         <img
                             className={styles.avatar}
-                            src="/images/worker.png"
+                            src={user.avatar?user.avatar:'images/lion.png'}
                             width="40"
                             height="40"
                             alt="avatar"

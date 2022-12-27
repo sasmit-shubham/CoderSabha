@@ -1,8 +1,8 @@
-const otpServices = require('../services/otp-services');
-const hashService = require('../services/hash-service');
-const userService = require('../services/user-service');
+const otpServices =  require('../services/otp-services');
+const hashService =  require('../services/hash-service');
+const userService =  require('../services/user-service');
 const tokenService = require('../services/token-service');
-const UserDto = require('../dtos/user-dto');
+const UserDto =      require('../dtos/user-dto');
 
 class Authcontroller {
     async sendOtp(req, res) {

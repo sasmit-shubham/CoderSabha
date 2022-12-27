@@ -6,8 +6,10 @@ const userSchema = new Schema(
         phone: { type: String, required: true },
         name: { type: String, required: false },
         avatar: { type: String, required: false, get: (avatar) => {
-            if(avatar)
-            return `${process.env.BASE_URL}${avatar}`
+            if(avatar){
+                return `${process.env.BASE_URL}${avatar}`
+            }
+            
             return avatar;
         } },
         activated: { type: Boolean, required: false, default: false }

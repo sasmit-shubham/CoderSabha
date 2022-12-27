@@ -22,7 +22,6 @@
     top:0;
     left:0;
     background-color:#061a2c ;
-
 }
 
 .avatars img:last-child{
@@ -50,5 +49,6 @@ left: 20px;
 
 .singleSpeaker .avatars img{
     position: intial;
-
 }
+
+

@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
+app.use(express.static('public')); 
+app.use('/storage', express.static('storage'));
 const DbConnect = require('./database')
 const PORT = process.env.PORT || 5500;
 const cors = require('cors');
