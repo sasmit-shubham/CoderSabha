@@ -19,7 +19,6 @@ class ActivateController {
         const imagePath = `${Date.now()}-${Math.round(
             Math.random() * 1e9
         )}.png`;
-        console.log("your image path is "+imagePath);
         try {
             const jimResp = await Jimp.read(buffer);
             jimResp
