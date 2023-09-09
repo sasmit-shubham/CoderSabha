@@ -7,6 +7,7 @@ const UserDto =      require('../dtos/user-dto');
 class Authcontroller {
     async sendOtp(req, res) {
         const { phone } = req.body;
+        console.log(phone);
         if (!phone) {
             return res.status(400).json({ message: "phone field is required" });
         }
@@ -26,6 +27,29 @@ class Authcontroller {
             console.log(err);
             res.status(500).json({ message: "message sending failed" });
         }
+    }
+
+    async sendOtpEmail(req,res){
+        const { email } = req.body;
+        console.log(email);
+        if (!email) {
+            return res.status(400).json({ message: "email field is required" });
+        }
+        const otp = otpServices.generateOtp();
+        const ttl = 1000*60*2;
+        const expires = Date.now() + ttl;
+        const data = `${email}.${otp}.${expires}`;
+        const hash = hashService.hashOtp(data);
+
+        try{
+            return res.json({
+                hash: `${hash}.${expires}`,email,otp
+            })
+        }catch(err){
+            console.log(err)
+            res.status(500).json({message:"message sending failed"})
+        }
+
     }
 
     async verifyOtp(req, res) {

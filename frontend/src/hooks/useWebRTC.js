@@ -27,7 +27,6 @@ export const useWebRTC = (roomId, user) => {
         },
         [clients, setClients]
     );
-
     useEffect(() => {
         clientsRef.current = clients;
     }, [clients]);

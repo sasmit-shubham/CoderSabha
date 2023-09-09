@@ -18,10 +18,14 @@ const StepOtp = () => {
   }
   const [otp,setOtp] = useState('');
   const {phone,hash} = useSelector((state)=>state.auth.otp)
+ 
   async function submit() {
+    console.log(otp)
+    console.log(phone)
+    console.log(hash)
     try{
-      const {data } = await verifyOtp({otp,phone,hash});
-      console.log(data);
+      const {data} = await verifyOtp({otp,phone,hash});
+      // console.log(data);
       dispatch(setAuth(data));
 
     } catch(err){

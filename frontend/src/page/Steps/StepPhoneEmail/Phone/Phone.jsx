@@ -21,6 +21,7 @@ const Phone = ({onNext}) => {
   async function Submit(){
     // server request
     const {data} = await sendOtp({phone:phoneNumber}); 
+    console.log("this data is being printed from the phone.jsx file");
     console.log(data);
     dispatch(setOtp({phone:data.phone, hash:data.hash}))
     onNext();

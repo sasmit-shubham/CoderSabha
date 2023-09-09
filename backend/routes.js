@@ -6,6 +6,7 @@ const authcontroller = require('./controllers/auth-controller');
 const authMiddleware = require('./middlewares/auth-middleware');
 const roomscontroller = require('./controllers/rooms-controller')
 router.post('/api/send-otp', authcontroller.sendOtp);
+router.post('/api/send-otp-email',authcontroller.sendOtpEmail);
 router.post('/api/verify-otp', authcontroller.verifyOtp);
 router.post('/api/activate',authMiddleware, activateController.activate);
 router.get('/api/refresh',authcontroller.refresh);

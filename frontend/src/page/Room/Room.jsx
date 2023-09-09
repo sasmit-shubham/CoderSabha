@@ -7,6 +7,7 @@ import {BiArrowBack} from "react-icons/bi"
 import { useNavigate } from 'react-router-dom'
 import {RiLogoutBoxLine} from "react-icons/ri"
 import {BsFillMicMuteFill} from "react-icons/bs"
+import {BsMic} from "react-icons/bs"
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getRoom } from '../../Http/Index'
@@ -58,7 +59,10 @@ const Room = () => {
                   autoPlay></audio>
                   <img className={styles.userAvatar} src={client.avatar} alt="avatar" />
                   <button className={styles.micBtn}>
-                    <BsFillMicMuteFill/>
+                    {
+                      client.muted?<BsMic/>:<BsFillMicMuteFill/>
+                    }
+                    
                   </button>
                 </div>
                 <h4>{client.name}</h4>
