@@ -20,10 +20,14 @@ img {
 }
 
 body{
-    background: #010e19;
+    background-image: url(https://w3dev.us/wp-content/themes/stike/assets/img/footer-shape2.png);
+    background-color: #010e19;
+    background-size: cover;
+    animation:imageChange 1s linear infinite;
     font-family: 'Nunito', sans-serif;
     color: #fff
 }
+
 button{
     border:none;
     outline:none;
